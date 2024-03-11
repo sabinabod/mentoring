@@ -1,0 +1,63 @@
+#2
+def word_counter (file_path):
+
+        with open(file_path, 'r') as x:
+            content = x.read()
+            word_count = len(content.split())
+            return word_count
+    
+
+
+file_path = input("Enter the path to the text file: ")
+word_count = word_counter (file_path)
+
+print("Number of words in the file:", word_count)
+
+
+#3
+def duplicate_letters(sentence):
+    words = sentence.split()
+    for word in words:
+        seen = set()
+        for char in word:
+            if char in seen:
+                return True
+            seen.add(char)
+    return False
+
+
+sentence = input("Enter a sentence: ")
+if duplicate_letters(sentence):
+    print("true")
+else:
+    print("false")
+
+
+
+#7
+def morse_code_translator(text):
+    morse_code_dict =                     { 'A':'.-', 'B':'-...',
+                    'C':'-.-.', 'D':'-..', 'E':'.',
+                    'F':'..-.', 'G':'--.', 'H':'....',
+                    'I':'..', 'J':'.---', 'K':'-.-',
+                    'L':'.-..', 'M':'--', 'N':'-.',
+                    'O':'---', 'P':'.--.', 'Q':'--.-',
+                    'R':'.-.', 'S':'...', 'T':'-',
+                    'U':'..-', 'V':'...-', 'W':'.--',
+                    'X':'-..-', 'Y':'-.--', 'Z':'--..',
+                    '1':'.----', '2':'..---', '3':'...--',
+                    '4':'....-', '5':'.....', '6':'-....',
+                    '7':'--...', '8':'---..', '9':'----.',
+                    '0':'-----', ', ':'--..--', '.':'.-.-.-',
+                    '?':'..--..', '/':'-..-.', '-':'-....-',
+                    '(':'-.--.', ')':'-.--.-'}
+    
+
+    morse_code_text = ''
+    for char in text.upper():
+          if char in morse_code_dict:
+                morse_code_text += morse_code_dict[char] + ' '
+    return morse_code_text
+
+input_text = input("Enter a word or a sentence to translate to Morse code: ")
+print("Morse code:", morse_code_translator(input_text))
