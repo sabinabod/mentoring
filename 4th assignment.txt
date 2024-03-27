@@ -1,0 +1,132 @@
+#1
+def find_max_three_salaries (x):
+        
+        sorted_salaries = sorted(x, reverse=True)
+           
+        return sorted_salaries[:3]
+
+salaries = [10000, 12000, 7000, 8500, 11200, 9300, 15100, 18000, 16400, 11000]
+
+print("Max three salaries:",find_max_three_salaries(salaries))
+
+
+
+#2 
+def find_salaries_above_mean(dictionary):
+    # Calculate mean salary
+    total_salary = sum(dictionary.values())
+    mean_salary = total_salary / len(dictionary)
+    return mean_salary 
+    
+name_to_salary_dictionary = {
+
+    'Adam': 10000,
+
+    'Beata': 12000,
+
+    'Jarek': 7000,
+
+    'Agnieszka': 8500,
+
+    'Marek': 11200,
+
+    'Ania': 9300,
+
+    'Piotr': 15100,
+
+    'Mateusz': 18000,
+
+    'Agata': 16400,
+
+    'Marian': 11000
+
+}
+
+mean=find_salaries_above_mean(name_to_salary_dictionary)
+print("mean: ",mean)
+for name, salary in name_to_salary_dictionary.items():
+    if salary>= mean:
+        print("name:", name, "- Salary:", salary)
+
+
+
+#3
+employees = [
+    {'Id': 1, 'Name': 'Adam', 'Department': 'Management', 'Salary': 10000},
+    {'Id': 2, 'Name': 'Beata', 'Department': 'Management', 'Salary': 12000},
+    {'Id': 3, 'Name': 'Jarek', 'Department': 'Kitchen', 'Salary': 7000},
+    {'Id': 4, 'Name': 'Agnieszka', 'Department': 'House Floor', 'Salary': 8500},
+    {'Id': 5, 'Name': 'Marek', 'Department': 'House Floor', 'Salary': 11200},
+    {'Id': 6, 'Name': 'Ania', 'Department': 'Kitchen', 'Salary': 9300},
+    {'Id': 7, 'Name': 'Piotr', 'Department': 'Management', 'Salary': 15100},
+    {'Id': 8, 'Name': 'Mateusz', 'Department': 'Cashier', 'Salary': 18000},
+    {'Id': 9, 'Name': 'Agata', 'Department': 'Management', 'Salary': 16400},
+    {'Id': 10, 'Name': 'Marian', 'Department': 'Cashier', 'Salary': 11000},
+]
+
+
+management_employees = [emp['Name'] for emp in employees if emp['Department'] == 'Management']
+management_employee_count = len(management_employees)
+
+print("In department: Management working now ",management_employee_count,"persons:", management_employees)
+
+
+#4
+employees = [
+    {'Id': 1, 'Name': 'Adam', 'Department': 'Management', 'Salary': 10000},
+    {'Id': 2, 'Name': 'Beata', 'Department': 'Management', 'Salary': 12000},
+    {'Id': 3, 'Name': 'Jarek', 'Department': 'Kitchen', 'Salary': 7000},
+    {'Id': 4, 'Name': 'Agnieszka', 'Department': 'House Floor', 'Salary': 8500},
+    {'Id': 5, 'Name': 'Marek', 'Department': 'House Floor', 'Salary': 11200},
+    {'Id': 6, 'Name': 'Ania', 'Department': 'Kitchen', 'Salary': 9300},
+    {'Id': 7, 'Name': 'Piotr', 'Department': 'Management', 'Salary': 15100},
+    {'Id': 8, 'Name': 'Mateusz', 'Department': 'Cashier', 'Salary': 18000},
+    {'Id': 9, 'Name': 'Agata', 'Department': 'Management', 'Salary': 16400},
+    {'Id': 10, 'Name': 'Marian', 'Department': 'Cashier', 'Salary': 11000},
+]
+
+employee_id_to_first_letter = [{emp['Id']: emp['Name'][0]} for emp in employees]
+
+print(employee_id_to_first_letter)
+
+
+#5
+import csv
+def compensation(path):
+    with open(path, 'r', newline='') as file:
+        csv_reader = csv.DictReader(file)
+        for employee in csv_reader:
+            if int(employee['Duration of employment in years']) >= 5:
+                compensation = int(employee['Duration of employment in years']) * 1000
+                print(f"name: {employee['Name']} - compensation: {compensation}")
+
+zz = 'C:/Users/micha/Downloads/5_input.csv'
+print (compensation(zz))
+
+
+
+#6
+import csv
+
+def date_diff_years(date_of_employment, comparison_date):
+    employment_date = datetime.strptime(date_of_employment, '%Y-%m-%d')
+    comparison_date = datetime.strptime(comparison_date, '%d/%m/%Y')
+    difference_in_days = (comparison_date - employment_date).days
+    difference_in_years = difference_in_days / 365  
+    return int(difference_in_years) 
+
+def compensation(path):
+    with open(path, 'r', newline='') as file:
+        csv_reader = csv.DictReader(file)
+        for employee in csv_reader:
+            years_of_service = date_diff_years(employee['Date of employment'], '27/03/2024')
+            if years_of_service >= 5:
+                compensation = years_of_service * 1000
+                print(f"name: {employee['Name']} - compensation: {compensation}")
+
+zz = 'C:/Users/micha/Downloads/6_input.csv'
+print (compensation(zz))
+
+
+
+
