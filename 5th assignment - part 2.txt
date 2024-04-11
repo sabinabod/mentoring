@@ -1,0 +1,43 @@
+#4
+import random
+
+def get_random_tip(filename):
+    with open(filename, 'r') as file:
+        tips = file.readlines()
+        return random.choice(tips)
+
+filename = "C:/Users/micha/Downloads/tips.txt"
+random_tip = get_random_tip(filename)
+print(random_tip)
+
+
+#5
+import pandas as pd
+
+df = pd.read_csv("C:/Users/micha/Downloads/egghunt.csv")
+
+def calculate_score(row):
+    regular_eggs = row['regular']
+    chocolate_eggs = row['chocolate']
+    return regular_eggs + (chocolate_eggs * 3)
+
+df['score'] = df.apply(calculate_score, axis=1)
+
+print("individual results:")
+print(df[['name', 'score']].astype(str))
+print()
+
+print("team results:")
+team_results = df.groupby('family')['score'].sum().reset_index()
+print(team_results.astype(str))
+print()
+
+
+winner = df.loc[df['score'].idxmax()]
+print("winner:")
+print(winner[['name', 'family', 'score']].astype(str))
+
+
+total_chocolate_eggs = df['chocolate'].sum()
+print(f"Total chocolate eggs found: {total_chocolate_eggs}")
+
