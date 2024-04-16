@@ -1,0 +1,104 @@
+#1
+import pandas as pd
+
+movie_performance_file_path = r"C:\Users\micha\Downloads\dc_marvel_movie_performance.csv"
+directors_file_path = r"C:\Users\micha\Downloads\directors.csv"
+
+movie_performance = pd.read_csv(movie_performance_file_path, encoding='latin1')
+
+columns_to_drop = ['MCU', 'Phase', 'Franchise']
+movie_performance.drop(columns=columns_to_drop, inplace=True)
+
+unique_values = sorted(movie_performance['Character Family'].unique())
+print("Unique values of Character Family column:")
+for value in unique_values:
+    print(value)
+
+longest_movie = movie_performance.loc[movie_performance['Minutes'].idxmax()]
+print("\nLongest Movie based on Minutes column:")
+print(longest_movie)
+
+mean_scores = movie_performance.groupby('Break Even')['Rotten Tomatoes Critic Score'].mean()
+print("\nMean Rotten Tomatoes Critic Score per Break Even category:")
+print(mean_scores)
+
+def recommend(score):
+    if score >= 90:
+        return "Strongly Yes"
+    elif 60 <= score < 90:
+        return "Yes"
+    elif 40 <= score < 60:
+        return "No"
+    else:
+        return "Strongly No"
+
+movie_performance['Recommended'] = movie_performance['Rotten Tomatoes Critic Score'].apply(recommend)
+
+recommended_counts = movie_performance['Recommended'].value_counts(normalize=True) * 100
+
+print("Percentage of films falling into each category:")
+print(recommended_counts)
+
+success_rate = movie_performance.groupby('Character Family')['Break Even'].value_counts().unstack(fill_value=0)
+
+success_rate['Success Rate'] = (success_rate['Success'] / (success_rate['Success'] + success_rate['Flop'])) * 100
+
+print("Success Rate per Character Family:")
+print(success_rate)
+
+directors_file_path = r"C:\Users\micha\Downloads\directors.csv"
+directors = pd.read_csv(directors_file_path)
+print(directors.head())
+
+merged_df = pd.merge(df, directors[['Movie', 'Director']], left_on='Film', right_on='Movie', how='inner')
+
+merged_df.drop(columns=['Movie'], inplace=True)
+
+print(merged_df)
+
+
+#2a
+
+import pandas as pd
+import matplotlib.pyplot as plt
+
+file_path = r"C:\Users\micha\Downloads\dc_marvel_movie_performance.csv"
+movie_performance = pd.read_csv(file_path, encoding='latin1')
+
+top_5_films = movie_performance.nlargest(5, 'Gross to Budget')
+
+plt.figure(figsize=(10, 6))
+plt.bar(top_5_films['Film'], top_5_films['Gross to Budget'], color='grey')
+plt.xlabel('Film')
+plt.ylabel('Gross to Budget')
+plt.title('Top 5 Films with Highest Gross to Budget')
+plt.tight_layout()
+plt.show()
+
+#2b
+
+import matplotlib.pyplot as plt
+
+categories = ['Strongly Yes', 'Yes', 'No', 'Strongly No']
+percentages = [66.60, 25.40, 5.00, 2.00]  
+
+plt.figure(figsize=(8, 8))
+plt.pie(percentages, labels=categories)
+plt.title('Distribution of Recommended Films')
+plt.axis('equal')
+plt.show()
+
+
+
+import pandas as pd
+
+categories = ['Strongly Yes', 'Yes', 'No', 'Strongly No']
+percentages = [66.60, 25.40, 5.00, 2.00]  
+data = pd.Series(percentages, index=categories, name='Recommended')
+
+data.plot(kind='pie', figsize=(8, 8), autopct='%1.1f%%', title='Distribution of Recommended Films')
+plt.ylabel('')
+plt.axis('equal') 
+plt.show()
+
+
